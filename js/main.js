@@ -1,3 +1,58 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyAK-2ZZ1pLbecxygnZQcA7viUfVWM-8iOc",
+    authDomain: "i-debuggedpro.firebaseapp.com",
+    databaseURL: "https://i-debuggedpro-default-rtdb.firebaseio.com",
+    projectId: "i-debuggedpro",
+    storageBucket: "i-debuggedpro.appspot.com",
+    messagingSenderId: "636652079611",
+    appId: "1:636652079611:web:02e764cd9f58fd50f8635e"
+  };
+  //initialzining Firebase
+  firebase.initializeApp(firebaseConfig);
+
+//reference to project
+var qoutationDB = firebase.database().ref('quotations');
+document.getElementById('qoute').addEventListener('submit', submitForm);
+
+
+
+function submitForm(e) {
+    e.preventDefault();
+    var name = getElementVal("form-floating-1");
+    var emailId = getElementVal("form-floating-2");
+    var service = getElementVal("floatingSelect");
+    var description = getElementVal("form-floating-3");
+
+    saveQuote(name, emailId, service, description);
+    
+    //enable Alert
+    document.querySelector('.alert').style.display = 'block';
+
+    //remove alert after 3 seconds
+setTimeout(() => {
+    document.querySelector('.alert').style.display = 'none';
+}, 3000);
+
+//reset the form
+document.getElementById('qoute').reset();
+
+}
+
+const saveQuote = (name, emailId, service, description) => {
+    var newForm = qoutationDB.push();
+    
+    newForm.set({
+        name : name,
+        emailId : emailId,
+        service : service,
+        description : description,
+    })
+}
+
+var getElementVal = (id) => {
+   return document.getElementById(id).value;
+}
+
 (function ($) {
     "use strict";
 
